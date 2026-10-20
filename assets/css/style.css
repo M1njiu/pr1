@@ -100,6 +100,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 body.menu-open, body.modal-open { overflow: hidden; }
 img, svg, video { display: block; max-width: 100%; }
@@ -114,6 +115,7 @@ h1, h2, h3, h4, h5 {
   letter-spacing: -0.035em;
   line-height: 1.04;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 p { margin: 0; text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; }
@@ -138,6 +140,44 @@ figure { margin: 0; }
   stroke-linejoin: round;
 }
 
+/* Grid and flex children must be allowed to shrink below their content width.
+   This matters for narrow screens and for users with enlarged browser text. */
+.split > *,
+.process-grid > *,
+.process-step > *,
+.step > *,
+.tour-grid > *,
+.visit-grid > *,
+.store-layout > *,
+.store-feature > *,
+.fish-feature > *,
+.delivery > *,
+.excursion-panel > *,
+.contact-layout > *,
+.products-note > *,
+.equipment-grid > *,
+.beer-feature > *,
+.about-text,
+.about-visual,
+.footer-col,
+.fact,
+.number-cell,
+.contact-method > div,
+.partner-grid > *,
+.packaging-grid > *,
+.product-grid > *,
+.awards-grid > *,
+.gallery-grid > *,
+.facts-grid > *,
+.mosaic > *,
+.coop-steps > *,
+.footer-top > *,
+.form-grid > *,
+.numbers > *,
+.products-note__stats > * {
+  min-width: 0;
+}
+
 /* ---------- Utilities ---------- */
 .container {
   width: min(var(--container), calc(100% - var(--gutter) * 2));
@@ -155,7 +195,7 @@ figure { margin: 0; }
   gap: clamp(24px, 4vw, 64px);
   margin-bottom: clamp(32px, 4.5vw, 56px);
 }
-.section-head__text { max-width: 720px; }
+.section-head__text { width: 100%; max-width: min(720px, 100%); min-width: 0; }
 .section-head h2 {
   font-size: clamp(1.9rem, 4vw, 3.35rem);
   margin-top: 16px;
@@ -578,6 +618,7 @@ figure { margin: 0; }
   color: rgba(245, 240, 227, 0.8);
   font-size: clamp(0.98rem, 1.3vw, 1.12rem);
   line-height: 1.72;
+  overflow-wrap: break-word;
 }
 .hero-actions {
   display: flex;
@@ -1142,7 +1183,7 @@ figure { margin: 0; }
 }
 .store-detail {
   display: grid;
-  grid-template-columns: 108px 1fr;
+  grid-template-columns: 108px minmax(0, 1fr);
   gap: 16px;
   padding: 13px 0;
   border-bottom: 1px solid var(--line);
@@ -1156,7 +1197,7 @@ figure { margin: 0; }
   color: var(--muted);
   padding-top: 3px;
 }
-.store-detail dd { margin: 0; font-weight: 600; line-height: 1.5; }
+.store-detail dd { margin: 0; min-width: 0; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
 .store-detail a { border-bottom: 1px solid var(--line); }
 .store-detail a:hover { border-color: var(--amber-strong); }
 .store-actions { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -1248,7 +1289,7 @@ figure { margin: 0; }
 }
 .contact-line {
   display: grid;
-  grid-template-columns: 104px 1fr;
+  grid-template-columns: 104px minmax(0, 1fr);
   gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid var(--line-light);
@@ -1262,7 +1303,7 @@ figure { margin: 0; }
   color: rgba(245, 240, 227, 0.66);
   padding-top: 3px;
 }
-.contact-line dd { margin: 0; color: var(--cream); font-weight: 600; line-height: 1.5; }
+.contact-line dd { margin: 0; min-width: 0; color: var(--cream); font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
 .contact-line a { border-bottom: 1px solid rgba(245, 240, 227, 0.22); }
 .contact-line a:hover { border-color: var(--amber); color: var(--amber); }
 .visit-actions { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -1778,6 +1819,8 @@ figure { margin: 0; }
 }
 .beer-spec dd {
   margin: 5px 0 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-family: var(--font-display);
   font-size: 1.02rem;
   font-weight: 500;
@@ -1819,7 +1862,7 @@ figure { margin: 0; }
 .products-note h2 { font-size: clamp(1.4rem, 2.6vw, 2rem); }
 .products-note p { margin-top: 12px; color: var(--muted); font-size: 0.9rem; }
 .products-note .btn { justify-self: end; }
-.products-note__stats { display: flex; gap: 30px; margin-top: 18px; }
+.products-note__stats { display: flex; flex-wrap: wrap; gap: 14px 30px; margin-top: 18px; }
 .products-note__stats span {
   font-size: 0.64rem;
   text-transform: uppercase;
@@ -1838,7 +1881,7 @@ figure { margin: 0; }
 /* ---------- Cooperation ---------- */
 .partner-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(14px, 2vw, 22px);
 }
 .partner-card {
@@ -1861,7 +1904,7 @@ figure { margin: 0; }
 .partner-card p { margin-top: 10px; color: var(--muted); font-size: 0.86rem; line-height: 1.6; }
 .packaging-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(10px, 1.5vw, 16px);
 }
 .pack-card {
@@ -2500,7 +2543,11 @@ figure { margin: 0; }
   .header-inner { gap: 12px; }
   .age-badge { width: 30px; height: 30px; font-size: 0.52rem; }
   .hero { min-height: clamp(600px, 90svh, 760px); padding-top: 80px; }
-  .hero h1 { font-size: clamp(2.55rem, 11.4vw, 3.9rem); max-width: 12ch; }
+  .hero h1 {
+    font-size: 2.55rem;
+    font-size: min(11.4vw, 3.9rem);
+    max-width: 12ch;
+  }
   .hero-foot { margin-top: 36px; }
   .hero-foot p { font-size: 0.58rem; max-width: 26ch; }
   .scroll-hint { display: none; }
@@ -2589,7 +2636,10 @@ figure { margin: 0; }
   .age-gate-card { padding: 26px 20px 24px; }
   .age-gate-logo { width: 76px; }
   .hero-lead { font-size: 0.94rem; }
-  .hero h1 { font-size: clamp(2.35rem, 11.6vw, 3.2rem); }
+  .hero h1 {
+    font-size: 2.35rem;
+    font-size: min(11.6vw, 3.2rem);
+  }
   .marquee-item { font-size: 0.68rem; }
   .tour-facts { gap: 16px 22px; }
   .footer-top { grid-template-columns: 1fr; }
@@ -2611,7 +2661,10 @@ figure { margin: 0; }
   .brand-note { display: none; }
   .brand-name { font-size: 0.76rem; }
   .age-badge { display: none; }
-  .hero h1 { font-size: 2.2rem; }
+  .hero h1 {
+    font-size: 2.2rem;
+    font-size: min(10.8vw, 2.2rem);
+  }
   .fact { padding: 16px 14px; }
   .beer-info h2 { font-size: 1.55rem; overflow-wrap: anywhere; }
   .beer-spec { padding-right: 8px; }
