@@ -27,7 +27,6 @@
   const statusEl = $('[data-game-status]');
   const soundButton = $('[data-sound]');
   const pauseButtons = $$('[data-pause]');
-  const jumpButton = $('[data-jump]');
 
   const BEST_KEY = 'tg-game-best';
   const SOUND_KEY = 'tg-game-sound';
@@ -94,6 +93,7 @@
     vy: 0,
     onGround: true,
     run: 0,
+    jumpBuffer: 0,
   };
 
   const obstacles = [];
@@ -221,6 +221,7 @@
     goose.vy = 0;
     goose.onGround = true;
     goose.run = 0;
+    goose.jumpBuffer = 0;
     updateHud(true);
   }
 
@@ -285,6 +286,9 @@
     announce('Забег начался. Прыгайте через препятствия и собирайте бутылки.');
     if (canvas.focus) canvas.focus({ preventScroll: true });
     if (soundOn) tone(420, 620, 0.12, 'triangle', 0.035);
+    if (window.matchMedia('(max-width: 700px)').matches && stage) {
+      window.setTimeout(() => stage.scrollIntoView({ behavior: 'smooth', block: 'center' }), 30);
+    }
   }
 
   function pauseGame() {
@@ -356,11 +360,26 @@
       resumeGame();
       return;
     }
-    if (state.mode !== 'playing' || !goose.onGround) return;
+    if (state.mode !== 'playing') return;
 
-    goose.vy = -state.H * 1.45;
+    // A tap slightly before touchdown is remembered and fires immediately
+    // on landing, so quick mobile taps never feel ignored.
+    if (!goose.onGround) {
+      goose.jumpBuffer = 0.16;
+      return;
+    }
+
+    doJump();
+  }
+
+  function doJump() {
+    goose.vy = -state.H * 1.78;
     goose.onGround = false;
+    goose.jumpBuffer = 0;
     playJump();
+    if (navigator.vibrate) {
+      try { navigator.vibrate(8); } catch (error) { /* optional */ }
+    }
     for (let i = 0; i < 5; i += 1) {
       particles.push({
         x: goose.x + goose.w * 0.35 + rand(-4, 6),
@@ -446,13 +465,16 @@
     state.scroll += state.speed * dt;
     state.score += dt * 9;
 
+    if (goose.jumpBuffer > 0) goose.jumpBuffer = Math.max(0, goose.jumpBuffer - dt);
+
     if (!goose.onGround) {
-      goose.vy += state.H * 5.1 * dt;
+      goose.vy += state.H * 4.8 * dt;
       goose.y += goose.vy * dt;
       if (goose.y >= state.groundY - goose.h) {
         goose.y = state.groundY - goose.h;
         goose.vy = 0;
         goose.onGround = true;
+        if (goose.jumpBuffer > 0) doJump();
       }
     } else {
       goose.run += dt * (7 + state.speed / state.H * 4);
@@ -1050,13 +1072,6 @@
       });
     }
 
-    if (jumpButton) {
-      jumpButton.addEventListener('click', () => {
-        if (state.mode === 'playing') jump();
-        else if (state.mode === 'paused') resumeGame();
-        else startGame();
-      });
-    }
 
     pauseButtons.forEach((button) => {
       button.addEventListener('click', () => togglePause());
