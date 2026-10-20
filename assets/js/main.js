@@ -153,6 +153,67 @@
     showGate();
   }
 
+  /* ---------- Secret game: five clicks on the logo ---------- */
+  const brandLinks = $$('a.brand');
+  if (brandLinks.length) {
+    let brandClicks = 0;
+    let brandTimer = null;
+    let brandTarget = null;
+    const isHomePage =
+      /(?:^|\/)index\.html$/.test(window.location.pathname) ||
+      /\/$/.test(window.location.pathname);
+
+    const resetBrandClicks = () => {
+      brandClicks = 0;
+      brandTarget = null;
+      if (brandTimer) {
+        clearTimeout(brandTimer);
+        brandTimer = null;
+      }
+    };
+
+    brandLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+          return;
+        }
+        event.preventDefault();
+        brandClicks += 1;
+        brandTarget = link;
+        link.classList.add('is-tapped');
+        window.setTimeout(() => link.classList.remove('is-tapped'), 180);
+
+        if (brandTimer) clearTimeout(brandTimer);
+
+        if (brandClicks >= 5) {
+          resetBrandClicks();
+          window.location.href = 'game.html';
+          return;
+        }
+
+        const href = link.getAttribute('href') || '';
+        if (isHomePage && href.includes('index.html')) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // A normal single click still works, just with a small delay so a
+        // rapid series of five clicks can be recognised. On the home page
+        // the logo already points to the current page, so no reload is needed.
+        brandTimer = window.setTimeout(
+          () => {
+            const href = brandTarget ? brandTarget.getAttribute('href') : null;
+            const wasHome = isHomePage;
+            resetBrandClicks();
+            if (href && !(wasHome && href.includes('index.html'))) {
+              window.location.href = href;
+            }
+          },
+          isHomePage ? 1600 : 450
+        );
+      });
+    });
+  }
+
   /* ---------- Scroll reveal ---------- */
   const revealItems = $$('.reveal');
   if (revealItems.length) {

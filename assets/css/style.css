@@ -356,6 +356,7 @@ figure { margin: 0; }
   transition: transform 0.35s var(--ease);
 }
 .brand:hover .brand-mark { transform: rotate(-4deg) scale(1.04); }
+.brand.is-tapped .brand-mark { transform: scale(0.92) rotate(-5deg); }
 .brand-name {
   display: block;
   font-family: var(--font-display);
