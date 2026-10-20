@@ -1,0 +1,21 @@
+<dialog class="age-gate" id="age-gate" aria-labelledby="age-title">
+  <div class="age-gate-card" data-age-main>
+    <img class="age-gate-logo" src="assets/media/logo-192.png" width="192" height="168" alt="">
+    <p class="eyebrow" style="justify-content:center">Пивоварня «Тарусский гусь»</p>
+    <h2 id="age-title">Вам уже есть 18?</h2>
+    <p>Сайт рассказывает о пивоварне и алкогольной продукции. Пожалуйста, подтвердите свой возраст.</p>
+    <div class="age-gate-actions">
+      <button class="btn btn--primary" type="button" data-age-yes>Да, мне есть 18</button>
+      <button class="btn btn--ghost" type="button" data-age-no>Нет</button>
+    </div>
+    <p class="age-gate-legal">Чрезмерное употребление алкоголя вредит вашему здоровью</p>
+  </div>
+
+  <div class="age-gate-card age-gate-denied" data-age-denied hidden>
+    <img class="age-gate-logo" src="assets/media/logo-192.png" width="192" height="168" alt="">
+    <h2>Возвращайтесь в 18 лет</h2>
+    <p>Сайт пивоварни доступен только совершеннолетним. Спасибо за понимание.</p>
+    <button class="btn btn--dark" type="button" data-age-back>Указать возраст заново</button>
+    <p class="age-gate-legal">Чрезмерное употребление алкоголя вредит вашему здоровью</p>
+  </div>
+</dialog>

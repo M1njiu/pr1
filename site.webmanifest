@@ -1,0 +1,14 @@
+{
+  "name": "Пивоварня «Тарусский гусь»",
+  "short_name": "Тарусский гусь",
+  "description": "Пивоварня полного цикла в Тарусе: пять лагеров, экскурсии и фирменный магазин.",
+  "lang": "ru",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f5f0e3",
+  "theme_color": "#0a1e17",
+  "icons": [
+    { "src": "assets/favicon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/favicon-32.png", "sizes": "32x32", "type": "image/png" }
+  ]
+}
