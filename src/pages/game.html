@@ -1,0 +1,115 @@
+<!--meta
+{
+  "slug": "game.html",
+  "title": "Пивной забег — мини-игра пивоварни «Тарусский гусь»",
+  "description": "Секретная мини-игра: тарусский гусь бежит по берегу Оки, перепрыгивает кеги и собирает бутылки пива.",
+  "body_class": "page page-game",
+  "robots": "noindex, follow",
+  "extra_head": "<link rel=\"stylesheet\" href=\"assets/css/game.css\">"
+}
+-->
+<section class="game-page">
+  <div class="container">
+    <noscript>
+      <p class="game-noscript">Для игры нужен JavaScript. Включите его в настройках браузера и обновите страницу — гусь уже разминается.</p>
+    </noscript>
+    <nav class="breadcrumb" aria-label="Хлебные крошки" style="color: var(--muted)">
+      <a href="index.html" style="color: var(--muted)">Главная</a>
+      <span aria-hidden="true" style="color: rgba(19, 35, 28, 0.35)">/</span>
+      <span>Пивной забег</span>
+    </nav>
+
+    <div class="game-intro">
+      <p class="eyebrow">Секретный уровень · 5 кликов по логотипу</p>
+      <h1>Пивной <em>забег</em></h1>
+      <p class="game-intro__lead">Тарусский гусь бежит по берегу Оки. Перепрыгивайте кеги, ящики и заборы, собирайте бутылки — одно столкновение, и забег окончен. Сколько продержитесь?</p>
+      <div class="game-intro__meta">
+        <span>Прыжок: тап / пробел / ↑</span>
+        <span>Бутылка: +10</span>
+        <span>Рекорд — в этом браузере</span>
+      </div>
+    </div>
+
+    <div class="game-shell">
+      <div class="game-hud">
+        <div class="game-hud__stats">
+          <div class="game-stat">
+            <span>Счёт</span>
+            <strong data-score>0</strong>
+          </div>
+          <div class="game-stat">
+            <span>Бутылки</span>
+            <strong data-bottles>0</strong>
+          </div>
+          <div class="game-stat game-stat--best">
+            <span>Рекорд</span>
+            <strong data-best>0</strong>
+          </div>
+        </div>
+        <div class="game-hud__actions">
+          <button class="game-icon-btn" type="button" data-sound aria-pressed="false" aria-label="Включить звук" title="Звук">♪</button>
+          <button class="game-icon-btn" type="button" data-pause aria-label="Поставить на паузу" title="Пауза">❚❚</button>
+        </div>
+      </div>
+
+      <div class="game-stage" data-stage>
+        <canvas id="game-canvas" class="game-canvas" width="900" height="420" tabindex="0"
+                aria-label="Игра «Пивной забег»: гусь бежит, прыгает через препятствия и собирает бутылки. Пробел или стрелка вверх — прыжок.">
+          Ваш браузер не поддерживает canvas. Попробуйте обновить браузер.
+        </canvas>
+
+        <div class="game-overlay" data-overlay>
+          <div class="game-overlay__card">
+            <img class="game-overlay__logo" src="assets/media/logo-192.png" width="192" height="168" alt="">
+            <p class="eyebrow" data-overlay-eyebrow>Пивоварня «Тарусский гусь»</p>
+            <h2 data-overlay-title>Готовы к забегу?</h2>
+            <p data-overlay-text>Прыгайте через препятствия и собирайте бутылки. Чем дальше — тем быстрее.</p>
+            <div class="game-overlay__result" data-overlay-result hidden>
+              <div><strong data-result-score>0</strong><span>счёт</span></div>
+              <div><strong data-result-bottles>0</strong><span>бутылок</span></div>
+            </div>
+            <button class="btn btn--primary" type="button" data-start>
+              <span data-start-label>Начать забег</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+            </button>
+            <p class="game-overlay__hint">Тап по полю или пробел — прыжок</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="game-help">
+        <span>Тап по игровому полю — прыжок</span>
+        <span class="game-help__keys"><kbd>Пробел</kbd> / <kbd>↑</kbd> — прыжок · <kbd>P</kbd> — пауза</span>
+      </p>
+      <p class="visually-hidden" data-game-status role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="game-tips">
+      <article class="game-tip">
+        <span class="game-tip__num">01</span>
+        <h2>Прыгайте вовремя</h2>
+        <p>На телефоне просто тапните по игровому полю. На компьютере — пробел или стрелка вверх.</p>
+      </article>
+      <article class="game-tip">
+        <span class="game-tip__num">02</span>
+        <h2>Собирайте бутылки</h2>
+        <p>Каждая бутылка даёт +10 к счёту. За расстояние счёт тоже растёт — но столкновение обнуляет забег.</p>
+      </article>
+      <article class="game-tip">
+        <span class="game-tip__num">03</span>
+        <h2>Берегите гуся</h2>
+        <p>Кеги, деревянные ящики и заборы. Скорость постепенно увеличивается — как и шанс встретить что-то покрепче.</p>
+      </article>
+    </div>
+
+    <div class="game-foot">
+      <p>Рекорд хранится локально в вашем браузере. Сайт информационный — никаких ставок и призов, только гусь.</p>
+      <a class="link-arrow" href="index.html">
+        Вернуться на главную
+        <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script src="assets/js/game.js" defer></script>

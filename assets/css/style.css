@@ -2887,3 +2887,160 @@ figure { margin: 0; }
   .age-gate h2 { font-size: 0.95rem; }
   .age-gate p { font-size: 0.66rem; }
 }
+
+
+/* ---------- Partner addresses on the stores page ---------- */
+.partners {
+  background: var(--cream);
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+.partners .section-head { align-items: flex-start; }
+.partners .section-head .link-arrow { margin-top: 6px; }
+.partners-list { border-bottom: 1px solid var(--line); }
+.partner-city {
+  padding: clamp(22px, 3vw, 32px) 0;
+  border-top: 1px solid var(--line);
+}
+.partner-city__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  min-width: 0;
+}
+.partner-city__head::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  flex: none;
+  background: var(--amber-strong);
+}
+.partner-city__head h3 {
+  font-size: clamp(1.2rem, 2.1vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.partner-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: clamp(24px, 4vw, 56px);
+  row-gap: 0;
+  list-style: none;
+}
+/* Five or fewer addresses -> one column; six or more -> two.
+   The :has() selector recalculates automatically when rows are added. */
+.partner-list--two,
+.partner-list:has(> li:nth-child(6)) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.partner-list li {
+  min-width: 0;
+  padding-bottom: 16px;
+  break-inside: avoid;
+}
+.partner-venue {
+  display: block;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.partner-address {
+  display: block;
+  padding-top: 6px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.partner-list li .partner-address:only-child {
+  padding-top: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+.partner-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 28px;
+  padding: clamp(22px, 3.5vw, 34px);
+  border-radius: 20px;
+  background: var(--forest-900);
+  color: var(--cream);
+}
+.partner-cta .eyebrow {
+  margin-bottom: 10px;
+  color: rgba(245, 240, 227, 0.58);
+}
+.partner-cta .eyebrow::before { background: var(--amber); }
+.partner-cta h3 {
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--cream);
+  max-width: 24ch;
+}
+.partner-cta p:not(.eyebrow) {
+  margin-top: 8px;
+  max-width: 52ch;
+  color: rgba(245, 240, 227, 0.66);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.partner-cta .btn { flex: none; }
+.partners-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.partners-note svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--amber-strong);
+}
+.partners-note a { text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 760px) {
+  .partner-city { padding: 20px 0; }
+  .partner-city__head { margin-bottom: 12px; }
+  .partner-city__head h3 { font-size: 1.25rem; }
+  .partner-list { column-gap: 18px; }
+  .partner-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  .partner-cta .btn { width: 100%; }
+}
+
+@media (max-width: 380px) {
+  .partner-list li { padding-bottom: 14px; }
+  .partner-venue { font-size: 0.8rem; }
+  .partner-address { font-size: 0.74rem; }
+  .partner-cta { padding: 16px; }
+  .partner-cta h3 { font-size: 1.12rem; }
+}
+
+
+@media (max-width: 300px) {
+  .partner-city__head::before { display: none; }
+  .partner-city__head h3 { font-size: 1rem; overflow-wrap: anywhere; }
+}
+
+
+@media (max-width: 300px) {
+  .partner-list--two,
+  .partner-list:has(> li:nth-child(6)) { grid-template-columns: 1fr; }
+}
